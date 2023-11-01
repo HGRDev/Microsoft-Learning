@@ -155,16 +155,120 @@ switch (menuSelection)
         if (petCount < maxPets)
         {
             Console.WriteLine($"We currently have {petCount} pets that need homes. We can manage {(maxPets - petCount)} more.");
-            Console.WriteLine("Press the Enter key to continue.");
         }
        
 
         while (anotherPet == "y" && petCount < maxPets)
         {
-            petCount++;
+            bool validEntry = false;
 
+            // get species (cat or dog) - string animalSpecies is a required field 
+            do
+            {
+                Console.WriteLine("\n\rEnter 'dog' or 'cat' to begin a new entry");
+                readResult = Console.ReadLine();
+                if (readResult != null)
+                {
+                    animalSpecies = readResult.ToLower();
+                    if (animalSpecies != "dog" && animalSpecies != "cat")
+                    {
+                        //Console.WriteLine($"You entered: {animalSpecies}.");
+                        validEntry = false;
+                    }
+                    else
+                    {
+                        validEntry = true;
+                    }
+                }
+            } while (!validEntry);
+
+            animalID = animalSpecies.Substring(0, 1) + (petCount + 1).ToString();
+
+            // get the pet's age. can be ? at initial entry.
+            do
+            {
+                int petAge;
+                Console.WriteLine("Enter the pet's age or enter ? if unknown");
+                readResult = Console.ReadLine();
+                if (readResult != null)
+                {
+                    animalAge = readResult;
+                    if (animalAge != "?")
+                    {
+                        validEntry = int.TryParse(animalAge, out petAge);
+                    }
+                    else
+                    {
+                        validEntry = true;
+                    }
+                }
+            } while (!validEntry);
+
+            // get pet physical description
+            do
+            {
+
+                Console.WriteLine("Enter a physical description of the pet (size, color, gender, weight, housebroken)");
+                readResult = Console.ReadLine();
+
+                if (!String.IsNullOrWhiteSpace(readResult))
+                {
+                    animalPhysicalDescription = readResult.Trim().ToLower();
+                }
+                else
+                {
+                    animalPhysicalDescription = "tbd";
+                }
+
+            } while (animalPhysicalDescription == "");
+
+            do
+            {
+
+                Console.WriteLine("Enter a description of the pet's personality (likes or dislikes, tricks, energy level)");
+                readResult = Console.ReadLine();
+
+                if (!String.IsNullOrWhiteSpace(readResult))
+                {
+                    animalPersonalityDescription = readResult.Trim().ToLower();
+                }
+                else
+                {
+                    animalPersonalityDescription = "tbd";
+                }
+
+            } while (animalPersonalityDescription == "");
+
+
+            do
+            {
+                Console.WriteLine("Enter a nickname for the pet");
+                readResult = Console.ReadLine();
+                if (!String.IsNullOrWhiteSpace(readResult))
+                {
+                    animalNickname = readResult.ToLower();
+                }
+                else
+                {
+                    animalNickname = "tbd";
+                }
+
+            } while (animalNickname == "");
+
+            ourAnimals[petCount, 0] = "ID #: " + animalID;
+            ourAnimals[petCount, 1] = "Species: " + animalSpecies;
+            ourAnimals[petCount, 2] = "Age: " + animalAge;
+            ourAnimals[petCount, 3] = "Nickname: " + animalNickname;
+            ourAnimals[petCount, 4] = "Physical description: " + animalPhysicalDescription;
+            ourAnimals[petCount, 5] = "Personality: " + animalPersonalityDescription;
+
+            // increment petCount (the array is zero-based, so we increment the counter after adding to the array)
+            petCount = petCount + 1;
+
+            // check maxPet limit
             if (petCount < maxPets)
             {
+                // another pet?
                 Console.WriteLine("Do you want to enter info for another pet (y/n)");
                 do
                 {
@@ -177,6 +281,7 @@ switch (menuSelection)
                 } while (anotherPet != "y" && anotherPet != "n");
             }
         }
+
         if (petCount >= maxPets)
         {
             Console.WriteLine("We have reached our limit on the number of pets that we can manage.");
