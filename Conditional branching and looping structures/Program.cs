@@ -288,11 +288,43 @@ switch (menuSelection)
             Console.WriteLine("Press the Enter key to continue.");
             readResult = Console.ReadLine();
         }
-
         break;
     case "3":
-        //Ensure animal ages and physical descriptions are complete
-        Console.WriteLine("Challenge Project - please check back soon to see progress.");
+        
+        for (int i = 0; i < maxPets - 1; i++)
+        {
+            if (ourAnimals[i, 0] != "ID #: ")
+            {
+                //Task requirement is to use variables and readresult, i am aware that this is double but this is asked.
+                if (!char.IsDigit(ourAnimals[i, 2].Last()))
+                {
+                    Console.WriteLine($"Enter an age for: {ourAnimals[i, 0]}:");
+                    readResult = Console.ReadLine();
+
+                    while (!int.TryParse(readResult, out int age) && readResult != null)
+                    {
+                        Console.WriteLine($"Enter a valid integer age for {ourAnimals[i, 0]}:");
+                        readResult = Console.ReadLine();
+                    }
+                    animalAge = readResult;
+                    ourAnimals[i, 2] = "Age: " + animalAge;
+                }
+                if (String.IsNullOrWhiteSpace(ourAnimals[i, 4].Substring(ourAnimals[i, 4].LastIndexOf(':') + 1)))
+                {
+
+                    Console.WriteLine($"Enter a physical description for: {ourAnimals[i, 0]}:");
+                    readResult = Console.ReadLine();
+                    while (String.IsNullOrWhiteSpace(readResult))
+                    {
+                        Console.WriteLine($"Enter a physical description for: {ourAnimals[i, 0]}:");
+                        readResult = Console.ReadLine();
+                    }
+                    animalPhysicalDescription = readResult;
+                    ourAnimals[i, 4] = animalPhysicalDescription;
+                }
+            }
+        }
+        Console.WriteLine("All pet requirements have been met, thank you.");
         Console.WriteLine("Press the Enter key to continue.");
         readResult = Console.ReadLine();
         break;
