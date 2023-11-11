@@ -108,7 +108,7 @@ do
     }
     else
     {
-        if (!readResult.Trim().ToLower().Equals("exit"))
+        if (!readResult!.Trim().ToLower().Equals("exit"))
         {
             Console.WriteLine("Enter a valid number from the menu options");
             Console.WriteLine();
@@ -306,7 +306,7 @@ switch (menuSelection)
                         Console.WriteLine($"Enter a valid integer age for {ourAnimals[i, 0]}:");
                         readResult = Console.ReadLine();
                     }
-                    animalAge = readResult;
+                    animalAge = readResult!;
                     ourAnimals[i, 2] = "Age: " + animalAge;
                 }
                 if (String.IsNullOrWhiteSpace(ourAnimals[i, 4].Substring(ourAnimals[i, 4].LastIndexOf(':') + 1)))
