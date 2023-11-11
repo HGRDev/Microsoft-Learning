@@ -14,7 +14,7 @@ pizza.Cheeses.Add(PizzaCheese.Mozzarella);
 pizza.Cheeses.Add(PizzaCheese.Parmesan);
 
 // Add toppings
-pizza.Toppings.Add(PizzaTopping.Sausage);
+pizza.Toppings ??= new List<PizzaTopping>();
 pizza.Toppings.Add(PizzaTopping.Pepperoni);
 pizza.Toppings.Add(PizzaTopping.Bacon);
 pizza.Toppings.Add(PizzaTopping.Ham);
